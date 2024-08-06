@@ -11,7 +11,7 @@ function App() {
           GH Pages Demo
         </h2>
         <h2>
-          main codebase
+          dev codebase
         </h2>
 
         <p> 2 Test env var: {process.env.REACT_APP_TEST_VAR} for {process.env.NODE_ENV} env.</p>
