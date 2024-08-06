@@ -10,6 +10,11 @@ function App() {
         <h2>
           GH Pages Demo
         </h2>
+        <h2>
+          main codebase
+        </h2>
+
+        <p> 2 Test env var: {process.env.REACT_APP_TEST_VAR} for {process.env.NODE_ENV} env.</p>
 
         <p>
           Edit <code>src/App.js</code> and save to reload.

@@ -14,6 +14,8 @@
   },
   "scripts": {
     "deploy": "gh-pages -d build",
+    "deploy:prod": "gh-pages -d build -b gh-pages -m \"Deploy to production\"",
+    "deploy:dev": "mkdir -p build/dev && mv build/* build/dev/ && mv build/dev/* build && rmdir build/dev && gh-pages -d build -b gh-pages -m \"Deploy to development\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

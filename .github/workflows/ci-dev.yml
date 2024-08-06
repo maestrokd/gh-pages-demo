@@ -1,13 +1,12 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Node.js CI
+name: CI-dev
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ "dev" ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -27,12 +26,20 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
+
+    - name: Update homepage in package.json
+      run: |
+          echo "Updating homepage to DEV"
+          sed -i "s|\"homepage\": \".*\"|\"homepage\": \"https://maestrokd.github.io/gh-pages-demo/dev\"|" package.json
+
     - run: npm run build --if-present
+      env:
+        REACT_APP_TEST_VAR: dev
     - run: npm test
 
-    - name: Deploy with gh-pages
-      run: |
-        git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-        npm run deploy -- -u "github-actions-bot <support+actions@github.com>"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build
+        destination_dir: 'dev' # Subdirectory for development
